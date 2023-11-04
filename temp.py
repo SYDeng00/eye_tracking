@@ -19,7 +19,7 @@ url_2 = 'https://www.wjx.cn/vm/Qi175TV.aspx#'
 ## Find eyetracker
 et = tr.find_all_eyetrackers()[0]
 
-participant_id = 2
+participant_id = sys.argv[0]
 ## Apply license file
 license_file = "license_key_00395217_-_DTU_Compute_IS404-100106341184"
 
