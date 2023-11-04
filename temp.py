@@ -125,9 +125,7 @@ while pairs:
         df["gaze_right_eye_x"] = [x[0] for x in df["gaze_right_eye"].values]
         df["gaze_right_eye_y"] = [x[1] for x in df["gaze_right_eye"].values]
         
-                # 使用数字代表布尔值
-        bool_str = "true" if random_bool else "false"
-        file_path = f"./thumbnails/{slide_number}/{participant_id}-data-{bool_str}.csv"
+        file_path = f"./thumbnails/{slide_number}/{participant_id}-data-{str(random_bool)}.csv"
         directory = os.path.dirname(file_path)
         
         if not os.path.exists(directory):
