@@ -39,7 +39,6 @@ if license_file != "":
 else:
     print("No license file installed")
 
-
 def gaze_data_callback(gaze_data):
     d["gaze_left_eye"].append(gaze_data["left_gaze_point_on_display_area"])
     d["gaze_right_eye"].append(gaze_data["right_gaze_point_on_display_area"])
@@ -67,8 +66,6 @@ def resize_image_to_half_screen(image):
     # Resize the image to the target dimensions
     return image.resize((int(700), int(600)))
 
-
-
 def draw_images(slide_number, graph, reverse):
     if reverse:
             indices = range(slide_number + 1, slide_number - 1, -1)
@@ -82,12 +79,9 @@ def draw_images(slide_number, graph, reverse):
         image.save(bio, format="PNG")
         graph.DrawImage(data=bio.getvalue(), location=loc)
 
-
-
 def draw_fixation_cross():
     graph.draw_line((2560 / 2, 1440 / 2 - 50), (2560 / 2, 1440 / 2 + 50), width=5, color="white")
     graph.draw_line((2560 / 2 - 50, 1440 / 2), (2560 / 2 + 50, 1440 / 2), width=5, color="white")
-
 
 graph = window["graph"]
 
@@ -98,7 +92,6 @@ survey_count = 1
 print(pairs)
 
 while pairs:
-    
     graph.draw_text("Press space to continue", (2560 / 2 , 1440/2 +200), color='white', font='Any 36')
     event, values = window.read()
     if event == sg.WINDOW_CLOSED:
@@ -107,7 +100,6 @@ while pairs:
     elif event == " ":
         slide_number = random.choice(pairs)
         selected_numbers.append(slide_number)
-        
 
         print("event space")
         graph.erase()
@@ -117,13 +109,10 @@ while pairs:
         graph.erase()
         d = {"gaze_left_eye": [], "gaze_right_eye": []}
         et.subscribe_to(tr.EYETRACKER_GAZE_DATA, gaze_data_callback, as_dictionary=True)
-        
-        
+
         random_bool = random.choice([True, False])  
         draw_images(slide_number, graph, random_bool)
-        
-        
-        
+
         window.refresh()
         time.sleep(1)
         et.unsubscribe_from(tr.EYETRACKER_GAZE_DATA, gaze_data_callback)
@@ -160,8 +149,6 @@ while pairs:
         pairs.remove(slide_number)
         print("Pairs after removal:", pairs)
 
-
-
 order_numebr_path = f"./thumbnails/order/{participant_id}-order.txt"
 directory2 = os.path.dirname(order_numebr_path)
 
@@ -171,15 +158,13 @@ if not os.path.exists(directory2):
 if os.path.exists(order_numebr_path):
     os.remove(file_path)
 
-
 with open(order_numebr_path, 'w') as file:
     print(selected_numbers)
     for i, number in enumerate(selected_numbers, start=1):  
         if i % 5 == 0:  
             file.write(f"{number}\n")
         else:
-            file.write(f"{number}\t")  
+            file.write(f"{number}\t")
 
-        
 webbrowser.open(url_2)
 window.close()
