@@ -10,6 +10,9 @@ from PIL import Image
 import webbrowser
 import random
 
+participant_id = -1
+photo_count = 60
+
 sg.theme("DarkBlue")
 sg.set_options(font=("Courier New", 32))
 
@@ -18,7 +21,6 @@ survey_url = 'https://www.wjx.cn/vm/Qi175TV.aspx#'
 ## Find eyetracker
 et = tr.find_all_eyetrackers()[0]
 
-participant_id = 4
 ## Apply license file
 license_file = "license_key_00395217_-_DTU_Compute_IS404-100106341184"
 
@@ -58,7 +60,6 @@ window = sg.Window("Title", layout, finalize=True, return_keyboard_events=True)
 window.maximize()
 
 def resize_image_to_half_screen(image):
-
     # Resize the image to the target dimensions
     return image.resize((int(700), int(600)))
 
@@ -81,12 +82,8 @@ def draw_fixation_cross():
 
 graph = window["graph"]
 
-number_photo = 60
-pairs = list(range(1, number_photo+1, 2))
-selected_numbers = []
-
-graph.draw_text(""" 
-                    Thank you for participating in our experiment\n\n
+graph.draw_text(f""" 
+                    Thank you for participating in our experiment, you're partcipant ID is {participant_id}\n\n"
                     This test will consist of 30 slides with 2 images side by side that will be displayed for 5 seconds.
                     You're goal is to be able to recall as many brands as possible.
                     You continue to the next set of images by pressing spacebar.
@@ -102,17 +99,16 @@ while True:
         graph.erase()
         break
 
-for pair in pairs
+pairs = list(range(1, photo_count+1, 2))
+random.shuffle(pairs)
+
+for pair in pairs:
     graph.draw_text("Press space to continue", (2560 / 2 , 1440/2 +200), color='white', font='Any 24')
     event, values = window.read()
     if event == sg.WINDOW_CLOSED:
         break
 
     elif event == " ":
-        slide_number = random.choice(pair)
-        selected_numbers.append(slide_number)
-
-        print("event space")
         graph.erase()
         draw_fixation_cross()
         window.refresh()
@@ -122,7 +118,7 @@ for pair in pairs
         et.subscribe_to(tr.EYETRACKER_GAZE_DATA, gaze_data_callback, as_dictionary=True)
 
         reverse = random.choice([True, False])  
-        draw_images(slide_number, graph, reverse)
+        draw_images(pair, graph, reverse)
 
         window.refresh()
         time.sleep(5)
@@ -136,7 +132,7 @@ for pair in pairs
         df["gaze_right_eye_x"] = [x[0] for x in df["gaze_right_eye"].values]
         df["gaze_right_eye_y"] = [x[1] for x in df["gaze_right_eye"].values]
 
-        file_path = f"./data/images_{slide_number}_{slide_number+1}/participant_{participant_id}_reverse_{str(reverse)}.csv"
+        file_path = f"./data/images_{pair}_{pair+1}/participant_{participant_id}_reverse_{str(reverse)}.csv"
         directory = os.path.dirname(file_path)
         
         if not os.path.exists(directory):
@@ -147,7 +143,7 @@ for pair in pairs
 
         df.to_csv(file_path)
 
-order_numebr_path = f"./data/display_order/participant_{participant_id}_order.txt"
+order_numebr_path = os.path.dirname(f"./data/display_order/participant_{participant_id}_order.txt")
 directory2 = os.path.dirname(order_numebr_path)
 
 if not os.path.exists(directory2):
@@ -157,11 +153,9 @@ if os.path.exists(order_numebr_path):
     os.remove(file_path)
 
 with open(order_numebr_path, 'w') as file:
-    for number in selected_numbers:
-        if reverse:
-            file.write(f"{number+1}_{number}\n")
-        else:
-            file.write(f"{number}_{number+1}\n")
+    file.write(str(participant_id)+":")
+    for i in pairs:
+        file.write(f"{i}_{i+1},")
 
 webbrowser.open(survey_url)
 window.close()
