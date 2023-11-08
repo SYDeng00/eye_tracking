@@ -39,7 +39,6 @@ if license_file != "":
 else:
     print("No license file installed")
 
-
 def gaze_data_callback(gaze_data):
     d["gaze_left_eye"].append(gaze_data["left_gaze_point_on_display_area"])
     d["gaze_right_eye"].append(gaze_data["right_gaze_point_on_display_area"])
@@ -67,8 +66,6 @@ def resize_image_to_half_screen(image):
     # Resize the image to the target dimensions
     return image.resize((int(700), int(600)))
 
-
-
 def draw_images(slide_number, graph, reverse):
     if reverse:
             indices = range(slide_number + 1, slide_number - 1, -1)
@@ -82,12 +79,9 @@ def draw_images(slide_number, graph, reverse):
         image.save(bio, format="PNG")
         graph.DrawImage(data=bio.getvalue(), location=loc)
 
-
-
 def draw_fixation_cross():
     graph.draw_line((2560 / 2, 1440 / 2 - 50), (2560 / 2, 1440 / 2 + 50), width=5, color="white")
     graph.draw_line((2560 / 2 - 50, 1440 / 2), (2560 / 2 + 50, 1440 / 2), width=5, color="white")
-
 
 graph = window["graph"]
 
@@ -95,7 +89,6 @@ number_photo = 60
 pairs = list(range(1, number_photo+1, 2))
 selected_numbers = []
 survey_count = 1
-
 
 graph.draw_text("The test will start soon...", (2560 / 2 , 1440/2 +200), color='white', font='Any 36')
 
@@ -143,7 +136,6 @@ while pairs:
         df["gaze_right_eye_x"] = [x[0] for x in df["gaze_right_eye"].values]
         df["gaze_right_eye_y"] = [x[1] for x in df["gaze_right_eye"].values]
 
-
         file_path = f"./thumbnails/{slide_number}/{participant_id}-data-{str(random_bool)}.csv"
         directory = os.path.dirname(file_path)
         
@@ -172,7 +164,6 @@ if not os.path.exists(directory2):
     
 if os.path.exists(order_numebr_path):
     os.remove(file_path)
-
 
 with open(order_numebr_path, 'w') as file:
     print(selected_numbers)
