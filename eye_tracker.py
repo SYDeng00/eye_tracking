@@ -25,11 +25,8 @@ license_file = "license_key_00395217_-_DTU_Compute_IS404-100106341184"
 if license_file != "":
     with open(license_file, "rb") as f:
         license = f.read()
-
         res = et.apply_licenses(license)
-        if len(res) == 0:
-            print("Successfully applied license from single key")
-        else:
+        if len(res) != 0:
             print(
                 "Failed to apply license from single key. Validation result: %s."
                 % (res[0].validation_result)
@@ -89,7 +86,16 @@ pairs = list(range(1, number_photo+1, 2))
 selected_numbers = []
 survey_count = 1
 
-graph.draw_text("The test will consist of 30 slides with 2 images side by side for 5 seconds.\nBefore each new slide you continue by pressing spacebar and a white focus cross will apeare.\nLook at the cross to center your vision", (2560 / 2 , 1440/2 +200), color='white', font='Any 36')
+graph.draw_text(""" 
+                    Thank you for participating in our experiment\n\n
+                    This test will consist of 30 slides with 2 images side by side that will be displayed for 5 seconds.
+                    You're goal is to be able to recall as many brands as possible.
+                    You continue to the next set of images by pressing spacebar.
+                    Before the slide a white focus cross will apeare for 1 second.
+                    Please look at the cross to center your vision.\n\n
+                    Press spacebar to start
+                """
+                    , (2560 / 2 , 1440/2 +200), color='white', font='Any 36')
 
 while True:
     event, values = window.read()
@@ -99,7 +105,7 @@ while True:
 
 while pairs:
 
-    graph.draw_text("Press space to continue", (2560 / 2 , 1440/2 +200), color='white', font='Any 36')
+    graph.draw_text("Press space to continue", (2560 / 2 , 1440/2 +200), color='white', font='Any 24')
     event, values = window.read()
     if event == sg.WINDOW_CLOSED:
         break
@@ -117,8 +123,8 @@ while pairs:
         d = {"gaze_left_eye": [], "gaze_right_eye": []}
         et.subscribe_to(tr.EYETRACKER_GAZE_DATA, gaze_data_callback, as_dictionary=True)
 
-        random_bool = random.choice([True, False])  
-        draw_images(slide_number, graph, random_bool)
+        reverse = random.choice([True, False])  
+        draw_images(slide_number, graph, reverse)
 
         window.refresh()
         time.sleep(5)
@@ -132,7 +138,7 @@ while pairs:
         df["gaze_right_eye_x"] = [x[0] for x in df["gaze_right_eye"].values]
         df["gaze_right_eye_y"] = [x[1] for x in df["gaze_right_eye"].values]
 
-        file_path = f"./Data/{slide_number}/{participant_id}-data-{str(random_bool)}.csv"
+        file_path = f"./Data/{slide_number}/{participant_id}-data-{str(reverse)}.csv"
         directory = os.path.dirname(file_path)
         
         if not os.path.exists(directory):
