@@ -90,7 +90,7 @@ pairs = list(range(1, number_photo+1, 2))
 selected_numbers = []
 survey_count = 1
 
-graph.draw_text("The test will start soon...", (2560 / 2 , 1440/2 +200), color='white', font='Any 36')
+graph.draw_text("The test will consist of 30 slides with 2 images side by side for 5 seconds.\nBefore each new slide you continue by pressing spacebar and a white focus cross will apeare.\nLook at the cross to center your vision", (2560 / 2 , 1440/2 +200), color='white', font='Any 36')
 
 while True:
     event, values = window.read()
