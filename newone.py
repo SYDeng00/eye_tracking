@@ -95,17 +95,14 @@ number_photo = 60
 pairs = list(range(1, number_photo+1, 2))
 selected_numbers = []
 survey_count = 1
-# print(pairs)
-graph.draw_text("The test will start soon", (2560 / 2 , 1440/2 +200), color='white', font='Any 36')
-
-# while
-# event, values = window.read()
-# if event == sg.WINDOW_CLOSED:
-#     break
-# elif event == " ":
-     
 
 
+graph.draw_text("The test will start soon...", (2560 / 2 , 1440/2 +200), color='white', font='Any 36')
+
+while True:
+    event, values = window.read()
+    if event == " " or sg.WINDOW_CLOSED:
+        break
 
 while pairs:
     
@@ -166,8 +163,6 @@ while pairs:
         print(selected_numbers)
         pairs.remove(slide_number)
         print("Pairs after removal:", pairs)
-
-
 
 order_numebr_path = f"./thumbnails/order/{participant_id}-order.txt"
 directory2 = os.path.dirname(order_numebr_path)
