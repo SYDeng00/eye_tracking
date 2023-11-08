@@ -18,7 +18,7 @@ survey_url = 'https://www.wjx.cn/vm/Qi175TV.aspx#'
 ## Find eyetracker
 et = tr.find_all_eyetrackers()[0]
 
-participant_id = 3
+participant_id = 4
 ## Apply license file
 license_file = "license_key_00395217_-_DTU_Compute_IS404-100106341184"
 
@@ -98,16 +98,15 @@ while True:
         break
 
 while pairs:
-    
+
     graph.draw_text("Press space to continue", (2560 / 2 , 1440/2 +200), color='white', font='Any 36')
     event, values = window.read()
     if event == sg.WINDOW_CLOSED:
         break
-     
+
     elif event == " ":
         slide_number = random.choice(pairs)
         selected_numbers.append(slide_number)
-        
 
         print("event space")
         graph.erase()
@@ -117,13 +116,10 @@ while pairs:
         graph.erase()
         d = {"gaze_left_eye": [], "gaze_right_eye": []}
         et.subscribe_to(tr.EYETRACKER_GAZE_DATA, gaze_data_callback, as_dictionary=True)
-        
-        
+
         random_bool = random.choice([True, False])  
         draw_images(slide_number, graph, random_bool)
-        
-        
-        
+
         window.refresh()
         time.sleep(5)
         et.unsubscribe_from(tr.EYETRACKER_GAZE_DATA, gaze_data_callback)
@@ -136,22 +132,21 @@ while pairs:
         df["gaze_right_eye_x"] = [x[0] for x in df["gaze_right_eye"].values]
         df["gaze_right_eye_y"] = [x[1] for x in df["gaze_right_eye"].values]
 
-        file_path = f"./Data/Advertisement/{slide_number}/{participant_id}-data-{str(random_bool)}.csv"
+        file_path = f"./Data/{slide_number}/{participant_id}-data-{str(random_bool)}.csv"
         directory = os.path.dirname(file_path)
         
         if not os.path.exists(directory):
             os.makedirs(directory)
-            
+
         if os.path.exists(file_path):
             os.remove(file_path)
-        
+
         df.to_csv(file_path)
-        
+
         print(slide_number)
-            
-            
+
         survey_count += 1
-        
+
         print(selected_numbers)
         pairs.remove(slide_number)
         print("Pairs after removal:", pairs)
@@ -161,7 +156,7 @@ directory2 = os.path.dirname(order_numebr_path)
 
 if not os.path.exists(directory2):
     os.makedirs(directory2)
-    
+
 if os.path.exists(order_numebr_path):
     os.remove(file_path)
 
