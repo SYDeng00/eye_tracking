@@ -10,8 +10,6 @@ from PIL import Image
 import webbrowser
 import random
 
-sg.theme("DarkBlue")
-sg.set_options(font=("Courier New", 32))
 
 url_1 = 'https://www.wjx.cn/vm/ryuAUKg.aspx#'
 url_2 = 'https://www.wjx.cn/vm/Qi175TV.aspx#'
@@ -44,6 +42,8 @@ def gaze_data_callback(gaze_data):
     d["gaze_right_eye"].append(gaze_data["right_gaze_point_on_display_area"])
 
 # Display resolution is below
+sg.theme("DarkBlue")
+sg.set_options(font=("Courier New", 32))
 layout = [
     [
         sg.Graph(
@@ -62,7 +62,6 @@ window = sg.Window("Title", layout, finalize=True, return_keyboard_events=True)
 window.maximize()
 
 def resize_image_to_half_screen(image):
-
     # Resize the image to the target dimensions
     return image.resize((int(700), int(600)))
 
