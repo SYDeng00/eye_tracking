@@ -98,11 +98,11 @@ survey_count = 1
 # print(pairs)
 graph.draw_text("The test will start soon", (2560 / 2 , 1440/2 +200), color='white', font='Any 36')
 
-while
-event, values = window.read()
-if event == sg.WINDOW_CLOSED:
-    break
-elif event == " ":
+# while
+# event, values = window.read()
+# if event == sg.WINDOW_CLOSED:
+#     break
+# elif event == " ":
      
 
 
