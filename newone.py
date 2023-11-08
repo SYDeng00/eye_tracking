@@ -13,7 +13,7 @@ import random
 sg.theme("DarkBlue")
 sg.set_options(font=("Courier New", 32))
 
-url = 'https://www.wjx.cn/vm/Qi175TV.aspx#'
+survey_url = 'https://www.wjx.cn/vm/Qi175TV.aspx#'
 
 ## Find eyetracker
 et = tr.find_all_eyetrackers()[0]
@@ -173,5 +173,5 @@ with open(order_numebr_path, 'w') as file:
         else:
             file.write(f"{number}\t")  
 
-webbrowser.open(url)
+webbrowser.open(survey_url)
 window.close()
