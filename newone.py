@@ -174,5 +174,4 @@ with open(order_numebr_path, 'w') as file:
             file.write(f"{number}\t")  
 
 webbrowser.open(url_2)
-webbrowser.open(url_1)
 window.close()
