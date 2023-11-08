@@ -13,7 +13,6 @@ import random
 sg.theme("DarkBlue")
 sg.set_options(font=("Courier New", 32))
 
-url_1 = 'https://www.wjx.cn/vm/ryuAUKg.aspx#'
 url_2 = 'https://www.wjx.cn/vm/Qi175TV.aspx#'
 
 ## Find eyetracker
@@ -73,7 +72,7 @@ def draw_images(slide_number, graph, reverse):
             indices = range(slide_number, slide_number + 2)
             
     for i, loc in zip(indices, [ (290, 1140), (1570, 1140)]):  # Only loop twice and adjust locations
-        image = Image.open(f"./thumbnails/{i}.PNG")
+        image = Image.open(f"./Data/Advertisement/{i}.PNG")
         image = resize_image_to_half_screen(image)
         bio = io.BytesIO()
         image.save(bio, format="PNG")
@@ -95,6 +94,7 @@ graph.draw_text("The test will consist of 30 slides with 2 images side by side f
 while True:
     event, values = window.read()
     if event == " " or sg.WINDOW_CLOSED:
+        graph.erase()
         break
 
 while pairs:
@@ -136,7 +136,7 @@ while pairs:
         df["gaze_right_eye_x"] = [x[0] for x in df["gaze_right_eye"].values]
         df["gaze_right_eye_y"] = [x[1] for x in df["gaze_right_eye"].values]
 
-        file_path = f"./thumbnails/{slide_number}/{participant_id}-data-{str(random_bool)}.csv"
+        file_path = f"./Data/Advertisement/{slide_number}/{participant_id}-data-{str(random_bool)}.csv"
         directory = os.path.dirname(file_path)
         
         if not os.path.exists(directory):
@@ -156,7 +156,7 @@ while pairs:
         pairs.remove(slide_number)
         print("Pairs after removal:", pairs)
 
-order_numebr_path = f"./thumbnails/order/{participant_id}-order.txt"
+order_numebr_path = f"./Data/Advertisement/order/{participant_id}-order.txt"
 directory2 = os.path.dirname(order_numebr_path)
 
 if not os.path.exists(directory2):
