@@ -84,7 +84,6 @@ graph = window["graph"]
 number_photo = 60
 pairs = list(range(1, number_photo+1, 2))
 selected_numbers = []
-survey_count = 1
 
 graph.draw_text(""" 
                     Thank you for participating in our experiment\n\n
@@ -103,15 +102,14 @@ while True:
         graph.erase()
         break
 
-while pairs:
-
+for pair in pairs
     graph.draw_text("Press space to continue", (2560 / 2 , 1440/2 +200), color='white', font='Any 24')
     event, values = window.read()
     if event == sg.WINDOW_CLOSED:
         break
 
     elif event == " ":
-        slide_number = random.choice(pairs)
+        slide_number = random.choice(pair)
         selected_numbers.append(slide_number)
 
         print("event space")
@@ -148,8 +146,6 @@ while pairs:
             os.remove(file_path)
 
         df.to_csv(file_path)
-        survey_count += 1
-        pairs.remove(slide_number)
 
 order_numebr_path = f"./data/display_order/participant_{participant_id}_order.txt"
 directory2 = os.path.dirname(order_numebr_path)
@@ -161,12 +157,11 @@ if os.path.exists(order_numebr_path):
     os.remove(file_path)
 
 with open(order_numebr_path, 'w') as file:
-    print(selected_numbers)
-    for i, number in enumerate(selected_numbers, start=1):  
-        if i % 5 == 0:  
-            file.write(f"{number}\n")
+    for number in selected_numbers:
+        if reverse:
+            file.write(f"{number+1}_{number}\n")
         else:
-            file.write(f"{number}\t")  
+            file.write(f"{number}_{number+1}\n")
 
 webbrowser.open(survey_url)
 window.close()
