@@ -152,10 +152,10 @@ if not os.path.exists(directory2):
 if os.path.exists(order_numebr_path):
     os.remove(file_path)
 
-with open(order_numebr_path, 'w') as file:
+with open(order_numebr_path, 'a') as file:
     file.write(str(participant_id)+":")
     for i in pairs:
         file.write(f"{i}_{i+1},")
-
+    file.write("\n")
 webbrowser.open(survey_url)
 window.close()
