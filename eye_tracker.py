@@ -10,7 +10,7 @@ from PIL import Image
 import webbrowser
 import random
 
-participant_id = -1
+participant_id = 2
 photo_count = 60
 
 sg.theme("DarkBlue")
@@ -83,9 +83,9 @@ def draw_fixation_cross():
 graph = window["graph"]
 
 graph.draw_text(f""" 
-                    Thank you for participating in our experiment, you're partcipant ID is {participant_id}\n\n"
+                    Thank you for participating in our experiment, your partcipant ID is {participant_id}, please write it down on the paper \n\n"
                     This test will consist of 30 slides with 2 images side by side that will be displayed for 5 seconds.
-                    You're goal is to be able to recall as many brands as possible.
+                    Your goal is to be able to recall as many brands as possible.
                     You continue to the next set of images by pressing spacebar.
                     Before the slide a white focus cross will apeare for 1 second.
                     Please look at the cross to center your vision.\n\n
