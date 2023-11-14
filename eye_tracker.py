@@ -10,7 +10,7 @@ from PIL import Image
 import webbrowser
 import random
 
-participant_id = 7
+participant_id = -1
 photo_count = 60
 
 sg.theme("DarkBlue")
