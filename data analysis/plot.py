@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import ptitprince as pt
 
 # retrieve data
 df = pd.read_csv('participants_gaze_data.csv')
@@ -30,4 +31,14 @@ plt.figure(figsize=(10, 6))
 sns.barplot(x='Participant', y='Difference', data=df)
 plt.title('Difference in Gaze Time for Each Participant')
 plt.xticks(rotation=90)  # Rotate X-axis labels for better readability
+plt.show()
+
+# Use the previous long form datadf_long
+plt.figure(figsize=(10, 6))
+
+# Create a raincloud plot
+ax = pt.RainCloud(x='Condition', y='Gaze Time (s)', data=df_long, palette="Set2", bw=.2,
+                  width_viol=.6, orient='h', alpha=.65, dodge=True, pointplot=True)
+
+plt.title('Raincloud Plot of Gaze Times under Two Conditions')
 plt.show()
