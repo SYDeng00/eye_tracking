@@ -47,7 +47,7 @@ from collections import OrderedDict
 
 def process_csv_files(directory):
     data = OrderedDict()
-    point_time = 5 / 470 # change point to time 
+    point_time = 5 / 460 # change point to time 
 
     flipped_folders = ['images_5_6', 'images_19_20', 'images_23_24', 'images_29_30', 'images_33_34', 'images_49_50']
 
