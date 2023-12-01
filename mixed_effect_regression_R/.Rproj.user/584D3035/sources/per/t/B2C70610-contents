@@ -1,0 +1,11 @@
+library(lme4)
+library(readxl)
+# 替换文件路径为你的Excel文件路径
+file_path <- "D:/DTU document/1st/cognitive experiment/mixed_logistic_regression.xlsx"
+data <- read_excel(file_path)
+model <- glmer(brand_recall ~ consistency + celebrity_familiarity + brand_familiarity + (1 | test_ID), 
+               data = data, 
+               family = binomial)
+summary(model)
+
+
